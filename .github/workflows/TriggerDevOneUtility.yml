@@ -20,7 +20,6 @@ jobs:
     - name: Webhook
       uses: distributhor/workflow-webhook@v2
       env:
-        webhook_type: 'json-extended'
         webhook_url: 'https://webhookpoc20220621170317.azurewebsites.net/api/values'
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
         
