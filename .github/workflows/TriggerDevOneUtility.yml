@@ -23,4 +23,5 @@ jobs:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+        data: ${{ toJson(github) }}
         
