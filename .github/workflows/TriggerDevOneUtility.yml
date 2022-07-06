@@ -10,25 +10,47 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
-  test:
+  send-notification:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: jitterbit/get-changed-files@v1
-        id: abc
-        with:
+    # Runs a single command using the runners shell
+    - name: FileChanged
+      uses: jitterbit/get-changed-files@v1
+      id: abc
+      with:
           format: space-delimited
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Printing
-        run: |
-          echo "All:"
-          echo "${{ steps.abc.outputs.all }}"
-          echo "Added:"
-          echo "${{ steps.abc.outputs.added }}"
-          echo "Removed:"
-          echo "${{ steps.abc.outputs.removed }}"
-          echo "Renamed:"
-          echo "${{ steps.abc.outputs.renamed }}"
-          echo "Modified:"
-          echo "${{ steps.abc.outputs.modified }}"
-          echo "Added+Modified:"
-          echo "${{ steps.abc.outputs.added_modified }}"
+      env:
+          MODIFIED_FILES: ${{ steps.abc.outputs.modified }}
+    - name: WebhookPayload
+      uses: distributhor/workflow-webhook@v2.0.3
+      env:
+        webhook_type: 'json-extended'
+        webhook_url: ${{ secrets.WEBHOOK_URL }}
+        webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+        data: ${{ toJson(env.MODIFIED_FILES) }}
+   
+    
+    
+    
+    
+    - name: Webhook
+    - uses: jitterbit/get-changed-files@v1
+    id: abc
+    with: 
+          format: space-delimited
+          token: ${{ secrets.GITHUB_TOKEN }}
+  - name: WebhookPayload      
+  - uses: distributhor/workflow-webhook@v2.0.3
+      env:
+        webhook_type: 'json-extended'
+        webhook_url: ${{ secrets.WEBHOOK_URL }}
+        webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+        data: ${{ toJson(steps.gitActionWorkflow.outputs.modified) }}    
+		
+		
+
+
