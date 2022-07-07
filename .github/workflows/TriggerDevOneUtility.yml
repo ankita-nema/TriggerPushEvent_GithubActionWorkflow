@@ -27,7 +27,7 @@ jobs:
           MODIFIED_FILES: ${{ steps.abc.outputs.modified }}
           run: |
             echo "Modified files are  $MODIFIED_FILES"
-            echo $GITHUB_EVENT_PATH
+            echo "$GITHUB_EVENT_PATH"
       
     - name: WebhookPayload
       uses: distributhor/workflow-webhook@v2.0.3
@@ -38,4 +38,4 @@ jobs:
        
         run: |
             echo "Modified files are  $MODIFIED_FILES"
-            echo $GITHUB_EVENT_PATH
+            echo "$GITHUB_EVENT_PATH"
