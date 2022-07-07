@@ -23,22 +23,21 @@ jobs:
       with:
           format: space-delimited
           token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+          ModifiedFiles: "ashgdj"
     - run: |
-            export FOO=bar
-            echo "::set-env name=FOO::$FOO"
+          echo "The files are "
+          echo "${{ env.ModifiedFiles }}"
        
       
     - name: Webhook
-    
-    
       uses: distributhor/workflow-webhook@v2.0.3
       env:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-       
-   
-    
+
+    - run: echo "${{ env.ModifiedFiles }}"
       
     
         
