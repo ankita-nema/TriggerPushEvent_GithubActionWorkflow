@@ -20,17 +20,16 @@ jobs:
     - name: FileChanged
       uses: jitterbit/get-changed-files@v1
       id: abc
-      env:
-          MODIFIED_FILES: ${{ steps.abc.outputs.modified }} 
       with:
           format: space-delimited
           token: ${{ secrets.GITHUB_TOKEN }}
-        
-     
+      env:
+          MODIFIED_FILES: ${{ steps.abc.outputs.modified }}
     - name: WebhookPayload
       uses: distributhor/workflow-webhook@v2.0.3
       env:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-        data: '$MODIFIED_FILES'
+        data: '{ "ModifiedFiles": $MODIFIED_FILES }'
+      
