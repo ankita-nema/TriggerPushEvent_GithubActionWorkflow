@@ -37,7 +37,7 @@ jobs:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-        data: '{ "ModifiedFiles": ${{env.Files}} }'
+        data: '{ "ModifiedFiles": "${{env.Files}}" }'
     - run: |
           echo "The files are "
           echo "${{ env.Files }}"
