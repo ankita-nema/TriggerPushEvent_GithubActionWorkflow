@@ -27,7 +27,7 @@ jobs:
     - run: |
           echo "The files are "
           echo "${{ env.ModifiedFiles }}"
-          echo "Files=abcdef" >> $GITHUB_ENV
+          echo "Files=${{ env.ModifiedFiles }}" >> $GITHUB_ENV
       env:
           ModifiedFiles: "ashgdj"
       
