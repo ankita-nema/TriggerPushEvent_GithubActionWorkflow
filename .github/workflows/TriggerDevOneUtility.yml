@@ -26,7 +26,7 @@ jobs:
       env:
           MODIFIED_FILES: ${{ steps.abc.outputs.modified }}
           run: |
-            echo "$MODIFIED_FILES"
+            echo "Modified files are  $MODIFIED_FILES"
       
     - name: WebhookPayload
       uses: distributhor/workflow-webhook@v2.0.3
@@ -34,6 +34,6 @@ jobs:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-        data: '{ "ModifiedFiles": ${{MODIFIED_FILES}} }'
+       
         run: |
-            echo "$MODIFIED_FILES"
+            echo "Modified files are  $MODIFIED_FILES"
