@@ -27,6 +27,7 @@ jobs:
     - run: |
           echo "The files are "
           echo "${{ env.ModifiedFiles }}"
+          echo "Files=abcdef" >> $GITHUB_ENV
       env:
           ModifiedFiles: "ashgdj"
       
@@ -38,7 +39,7 @@ jobs:
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
     - run: |
           echo "The files are "
-          echo "${{ env.ModifiedFiles }}"
+          echo "${{ env.Files }}"
       
 
    
