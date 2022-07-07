@@ -26,16 +26,16 @@ jobs:
       env:
           MODIFIED_FILES: ${{ steps.abc.outputs.modified }}
           run: |
-            echo "Modified files are  $MODIFIED_FILES"
-            echo "$GITHUB_EVENT_PATH"
+            export FOO=bar
+            echo "::set-env name=FOO::$FOO"
       
     - name: WebhookPayload
       uses: distributhor/workflow-webhook@v2.0.3
+     
       env:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-       
-        run: |
-            echo "Modified files are  $MODIFIED_FILES"
-            echo "$GITHUB_EVENT_PATH"
+        run: echo $FOO
+        
+        
