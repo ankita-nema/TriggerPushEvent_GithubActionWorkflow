@@ -32,4 +32,4 @@ jobs:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
         data: '{ "ModifiedFiles": "${MODIFIED_FILES}" }'
-      
+        run: echo "$MODIFIED_FILES"
