@@ -15,16 +15,18 @@ jobs:
    runs-on: ubuntu-latest
    steps:
      # Git Checkout
-    - name: Checkout Code
-      uses: actions/checkout@v2
-      env:
-        CHECKOUT_FILTER_REGEX_INCLUDE: .*api\/(.*)\.yaml
+    - name: Checkout service registry repo
+      uses: actions/checkout@v3
+      with:
+        path: .*api\/(.*)\.yaml
+      
         
 # call webhook only for API files           
     - name: Webhook
+      if: success()
       uses: distributhor/workflow-webhook@v2.0.3
       env:
-        WEBHOOK_FILTER_REGEX_INCLUDE: .*api\/(.*)\.yaml
+        
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
