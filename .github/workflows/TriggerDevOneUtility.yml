@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if the push is for API documentation file
-        uses: distributhor/webhook-action@v1
+        uses: distributhor/webhook-action@v2.0.3
         env:
             webhook_type: 'json-extended'
             webhook_url: ${{ secrets.WEBHOOK_URL }}
