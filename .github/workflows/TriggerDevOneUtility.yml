@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '*/api/**/*'
+      - 'api/**/*'
 
 jobs:
   example_job:
@@ -11,10 +11,15 @@ jobs:
     steps:
       - name: Check if the push is for API documentation file
         uses: distributhor/webhook-action@v2.0.3
+        with:
+          url: ${{ secrets.WEBHOOK_URL }}
+          method: POST
+          payload: |
+            {
+              "data": "${{ github.event_path }}"
+            }
         env:
-            webhook_type: 'json-extended'
-            webhook_url: ${{ secrets.WEBHOOK_URL }}
-            webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
        
 
 
