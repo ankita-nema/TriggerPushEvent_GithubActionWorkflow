@@ -16,7 +16,7 @@ jobs:
       - name: Call middleware
         uses: distributhor/workflow-webhook@v2.0.3
         with:
-          url: 'https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive'
+          url: https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive
           method: POST
           data: ${{ toJson(github) }}
           headers: |
