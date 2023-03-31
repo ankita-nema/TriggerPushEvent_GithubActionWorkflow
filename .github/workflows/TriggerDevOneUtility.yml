@@ -1,25 +1,21 @@
-name: Send Payload to API Documentation middleware
-
+name: Send Push Payload
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'Dataextraction/api/*'
 
 jobs:
   send_payload:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Call middleware
-        uses: distributhor/workflow-webhook@v2.0.3
-        with:
-          url: https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive
-          method: POST
-          data: ${{ toJson(github) }}
-          headers: |
-            Content-Type: application/json
-            Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}
-          if: startsWith(github.event_name, 'push') && github.ref == 'refs/heads/main' 
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Send push payload
+      uses: distributhor/webhook-action@v2.0.3
+      with:
+        url: 'https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive'
+        method: POST
+        payload: ${{ toJson(github.event) }}
+        content-type: application/json
+        secret: ${{ secrets.WEBHOOK_SECRET }}
