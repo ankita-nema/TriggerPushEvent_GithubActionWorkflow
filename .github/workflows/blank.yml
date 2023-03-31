@@ -7,12 +7,13 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+    paths:
+      - 'dataextraction/api/**'
+  
+env:
+  WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+  WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_SECRET }}
+  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -22,12 +23,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: My Step
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Send Push Payload
         uses: distributhor/workflow-webhook@v2.0.3
         with:
-          url: 'https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive'
-          method: 'POST'
-          contentType: 'application/json'
-          body: ${{ toJson(github.event) }}
-          secret: ${{ secrets.WEBHOOK_SECRET }}
-          paths: '.*/api/.*'
+          webhook_url: ${{ env.WEBHOOK_URL }}
+          webhook_token: ${{ env.WEBHOOK_TOKEN }}
+          event_type: push
+          content_type: json
+          payload: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}", "head_commit": "${{ github.sha }}", "pusher": "${{ github.actor }}"}'
+          
+        
