@@ -22,4 +22,4 @@ jobs:
           headers: |
             Content-Type: application/json
             Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}
-          if: startsWith(github.event_name, 'push') && github.ref == 'refs/heads/main' && github.event_path =~ '.*/api/**/*'
+          if: startsWith(github.event_name, 'push') && github.ref == 'refs/heads/main' 
