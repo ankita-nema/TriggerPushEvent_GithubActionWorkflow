@@ -1,6 +1,9 @@
 name: Send Push Payload
 on:
-  push:
+  push: 
+    branches:
+      - main
+      - master
     paths:
       - 'Dataextraction/api/*'
 
