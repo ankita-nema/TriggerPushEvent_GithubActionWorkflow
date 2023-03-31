@@ -10,34 +10,17 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
-  send-notification:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-        
-      # Git Checkout
+  build:
+   name: Check File Type
+   runs-on: ubuntu-latest
+   steps:
+     # Git Checkout
     - name: Checkout Code
       uses: actions/checkout@v2
       env:
         CHECKOUT_FILTER_REGEX_INCLUDE: .*api\/(.*)\.yaml
         
-    # Runs a single command using the runners shell
-    - name: FileChanged
-      uses: jitterbit/get-changed-files@v1
-      id: getModifiedFile
-      with:
-          format: space-delimited
-          token: ${{ secrets.GITHUB_TOKEN }}
-     
-    - run: |
-          echo "The files are "
-          echo "${{ env.ModifiedFiles }}"
-          echo "Files=${{ env.ModifiedFiles }}" >> $GITHUB_ENV
-      env:
-          ModifiedFiles: ${{ steps.getModifiedFile.outputs.modified }}
-      
+# call webhook only for API files           
     - name: Webhook
       uses: distributhor/workflow-webhook@v2.0.3
       env:
@@ -45,10 +28,7 @@ jobs:
         webhook_type: 'json-extended'
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-        data: '{ "ModifiedFiles": "${{env.Files}}" }'
-    - run: |
-          echo "The files are "
-          echo "${{ env.Files }}"
+      
       
 
    
