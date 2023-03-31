@@ -1,39 +1,27 @@
-# This is a basic workflow that is manually triggered
-name: Push Notification
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI or API.
+name: hook to APIDocumentation Middleware
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the master branch
   push:
-    branches: [ main ]
+    paths:
+      - 'api/**/*'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
-  build:
-   name: Check File Type and call webhook
-   runs-on: ubuntu-latest
-   steps:
-     # Git Checkout
-    - name: Checkout service registry repo
-      uses: actions/checkout@v3
-      with:
-        path: .*api\/(.*)\.yaml
-      
-        
-# call webhook only for API files           
-    - name: Webhook
-      if: success()
-      uses: distributhor/workflow-webhook@v2.0.3
-      env:
-        
-        webhook_type: 'json-extended'
-        webhook_url: ${{ secrets.WEBHOOK_URL }}
-        webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-      
-      
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if the push is for API documentation file
+        if: ${{ github.event_path =~ '.*api\/(.*)\.yaml' }}
+        uses: distributhor/webhook-action@v1
+        env:
+            webhook_type: 'json-extended'
+            webhook_url: ${{ secrets.WEBHOOK_URL }}
+            webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+       
 
-   
+
+
+
+
+
       
     
         
