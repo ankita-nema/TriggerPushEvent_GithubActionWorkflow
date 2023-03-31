@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if the push is for API documentation file
-        if: ${{ github.event_path =~ '.*api\/(.*)\.yaml' }}
         uses: distributhor/webhook-action@v1
         env:
             webhook_type: 'json-extended'
