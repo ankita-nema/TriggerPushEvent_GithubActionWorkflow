@@ -13,9 +13,16 @@ jobs:
   send-notification:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+        
+      # Git Checkout
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      env:
+        CHECKOUT_FILTER_REGEX_INCLUDE: .*api\/(.*)\.yaml
+        
     # Runs a single command using the runners shell
     - name: FileChanged
       uses: jitterbit/get-changed-files@v1
