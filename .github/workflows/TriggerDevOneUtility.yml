@@ -1,6 +1,7 @@
 name: hook to APIDocumentation Middleware
 on:
   push:
+    branches: [ main ]
     paths:
       - '*/api/**/*'
 
