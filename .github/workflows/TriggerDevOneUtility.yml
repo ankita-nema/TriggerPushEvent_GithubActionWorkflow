@@ -1,35 +1,25 @@
-name: hook to APIDocumentation Middleware
+name: Send Payload to API Documentation middleware
+
 on:
   push:
-    branches: [ main ]
-    paths:
-      - '.*/api/**/*'
+    branches:
+      - main
 
 jobs:
-  example_job:
+  send_payload:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check if the push is for API documentation file
-        uses: distributhor/webhook-action@v2.0.3
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Call middleware
+        uses: distributhor/webhook-action@v2
         with:
           url: ${{ secrets.WEBHOOK_URL }}
           method: POST
-          payload: |
-            {
-              "data": "${{ github.event_path }}"
-            }
-        env:
-          GITHUB_EVENT_PATH: ${{ github.event_path }}
-       
-
-
-
-
-
-
-      
-    
-        
-      
-        
-        
+          data: ${{ toJson(github) }}
+          headers: |
+            Content-Type: application/json
+            Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}
+          if: startsWith(github.event_name, 'push') && github.ref == 'refs/heads/main' && github.event_path =~ '.*/api/**/*'
