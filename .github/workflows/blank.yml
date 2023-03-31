@@ -25,9 +25,9 @@ jobs:
       - name: My Step
         uses: distributhor/workflow-webhook@v2.0.3
         with:
-          url: https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive
-          method: POST
-          contentType: application/json
+          url: 'https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive'
+          method: 'POST'
+          contentType: 'application/json'
           body: ${{ toJson(github.event) }}
           secret: ${{ secrets.WEBHOOK_SECRET }}
-          paths: .*/api/.*
+          paths: '.*/api/.*'
