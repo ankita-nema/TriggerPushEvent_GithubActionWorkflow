@@ -15,7 +15,8 @@ jobs:
       uses: distributhor/workflow-webhook@v2.0.3
       with:
         url: 'https://endpointtest20230320150036.azurewebsites.net/api/Github/Receive'
-        method: POST
-        payload: ${{ toJson(github.event) }}
-        content-type: application/json
-        secret: ${{ secrets.WEBHOOK_SECRET }}
+        method: 'POST'
+        data: ${{ toJson(github.event) }}
+        headers: |
+            Content-Type: application/json
+            Authorization: Bearer ${{ secrets.WEBHOOK_SECRET  }}
