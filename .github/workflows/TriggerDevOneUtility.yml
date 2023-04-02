@@ -1,4 +1,4 @@
-name: Send Push Payload
+name: Middleware 
 on:
   push: 
     branches:
