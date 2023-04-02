@@ -1,4 +1,4 @@
-name: Middleware 
+name: Middleware-action 
 on:
   push: 
     branches:
