@@ -27,17 +27,21 @@ jobs:
       - name: Construct push event payload
         id: push_payload
         run: |
-          push_payload=$(echo "${{ github.event.pull_request.head }}" | jq -s '. | {
-            ref: "refs/heads/main",
-            before: $ARGS.positional[0].base.sha,
-            after: $ARGS.positional[0].sha,
-            created: false,
-            deleted: false,
-            forced: false,
-            base_ref: null,
-            compare: "https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}",
-            commits: $ARGS.positional[0].commits
-          }')
+          push_payload=$(echo "${{ github.event.pull_request.head }}" | jq -s '.[0] | {
+          ref: "refs/heads/main",
+          before: $ARGS.positional[0].base.sha,
+          after: $ARGS.positional[0].sha,
+          created: false,
+          deleted: false,
+          forced: false,
+          base_ref: null,
+          compare: "https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}",
+          commits: $ARGS.positional[0].commits
+           }')
+  env:
+    GITHUB_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+    GITHUB_BASE_REF: ${{ github.event.pull_request.base.ref }}
+
       
       - name: Send payload to endpoint
         uses: distributhor/workflow-webhook@v2.0.3
