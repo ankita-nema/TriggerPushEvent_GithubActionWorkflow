@@ -8,14 +8,17 @@ on:
   pull_request:
     branches: [ "main" ]
     types:  [closed]
+    
+env:
+  WEBHOOK_URL: https://endpointtest20230412121510.azurewebsites.net/api/Github/Receive
+  WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+  WEBHOOK_CONTENT_TYPE: application/json
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+ 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  sendPayload:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
