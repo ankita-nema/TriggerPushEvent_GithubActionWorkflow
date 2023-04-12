@@ -23,11 +23,27 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v3
+        
+      - name: Construct push event payload
+        id: push_payload
+        run: |
+          push_payload=$(echo "${{ github.event.pull_request.head }}" | jq -s '. | {
+            ref: "refs/heads/main",
+            before: $ARGS.positional[0].base.sha,
+            after: $ARGS.positional[0].sha,
+            created: false,
+            deleted: false,
+            forced: false,
+            base_ref: null,
+            compare: "https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}",
+            commits: $ARGS.positional[0].commits
+          }')
       
       - name: Send payload to endpoint
         uses: distributhor/workflow-webhook@v2.0.3
         env:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-          data: '{"commit": "${{ github.event.pull_request.merge_commit_sha }}"}'
+          webhook_payload: ${{ steps.push_payload.outputs.push_payload }}
+          
        
