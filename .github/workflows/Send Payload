@@ -1,0 +1,27 @@
+name: Send payload on pull request merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - '*/Dataextraction/api/*'
+
+jobs:
+  send-payload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send payload to endpoint
+        uses: distributhor/workflow-webhook@v1
+        with:
+          url: ${{ secrets.WEBHOOK_URL }}
+          method: POST
+          headers: |
+            Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}
+            Content-Type: application/json
+          json: |
+            {
+              "commit": "${{ github.event.pull_request.merge_commit_sha }}",
+             
+            }
