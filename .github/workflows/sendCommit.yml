@@ -9,10 +9,7 @@ on:
     branches: [ "main" ]
     types:  [closed]
     
-env:
-  WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-  WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
-  WEBHOOK_CONTENT_TYPE: application/json
+
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -29,14 +26,8 @@ jobs:
       
       - name: Send payload to endpoint
         uses: distributhor/workflow-webhook@v2.0.3
-        with:
-          url: https://endpointtest20230412121510.azurewebsites.net/api/Github/Receive
-          method: POST
-          headers: |
-            Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}
-            Content-Type: application/json
-          json: |
-            {
-              "commit": "${{ github.event.pull_request.merge_commit_sha }}",
-             
-            }
+        env:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+          data: '{"commit": "${{ github.event.pull_request.merge_commit_sha }}",}'
+       
