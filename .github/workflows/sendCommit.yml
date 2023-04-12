@@ -38,9 +38,7 @@ jobs:
           compare: "https://github.com/${{ github.repository }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}",
           commits: $ARGS.positional[0].commits
            }')
-  env:
-    GITHUB_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-    GITHUB_BASE_REF: ${{ github.event.pull_request.base.ref }}
+ 
 
       
       - name: Send payload to endpoint
