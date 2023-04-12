@@ -28,7 +28,7 @@ jobs:
       - name: Send payload to endpoint
         uses: distributhor/workflow-webhook@v2.0.3
         with:
-          url: ${{ secrets.WEBHOOK_URL }}
+          url: https://endpointtest20230412121510.azurewebsites.net/api/Github/Receive
           method: POST
           headers: |
             Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}
