@@ -29,5 +29,5 @@ jobs:
         env:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
-          data: '{"commit": "${{ github.event.pull_request.merge_commit_sha }}",}'
+          data: '{"commit": "${{ github.event.pull_request.merge_commit_sha }}"}'
        
