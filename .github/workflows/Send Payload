@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '*/Dataextraction/api/*'
+      - '**api/**.yaml'
 
 jobs:
   send-payload:
