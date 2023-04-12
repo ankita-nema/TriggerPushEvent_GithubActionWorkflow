@@ -10,7 +10,7 @@ on:
     types:  [closed]
     
 env:
-  WEBHOOK_URL: https://endpointtest20230412121510.azurewebsites.net/api/Github/Receive
+  WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
   WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
   WEBHOOK_CONTENT_TYPE: application/json
   
