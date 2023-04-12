@@ -1,5 +1,4 @@
 name: Send payload on pull request merge
-
 on:
   pull_request:
     types: [closed]
